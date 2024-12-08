@@ -1,3 +1,5 @@
+import BasePage from '../basePage/BasePage';
+
 class AboutUsPage extends BasePage {
     aboutUsElements = {
         aboutUsLabel: '#videoModalLabel',
@@ -7,19 +9,19 @@ class AboutUsPage extends BasePage {
 
     aboutUsLabel() {
         return cy.get(this.aboutUsElements.aboutUsLabel, {
-            timeout: super.wait.timeout,
+            timeout: super.getTimeout(),
         });
     }
 
     closeButton1() {
         return cy.get(this.aboutUsElements.closeButton1, {
-            timeout: super.wait.timeout,
+            timeout: super.getTimeout(),
         });
     }
 
     closeButton2() {
         return cy.get(this.aboutUsElements.closeButton2, {
-            timeout: super.wait.timeout,
+            timeout: super.getTimeout(),
         });
     }
 
@@ -33,7 +35,7 @@ class AboutUsPage extends BasePage {
 
     isAboutUsPageVisible(labelText) {
         super.isElementVisible(this.aboutUsLabel());
-        this.aboutUsLabel().contains(labelText);
+        this.aboutUsLabel().should('contain.text', labelText);
     }
 }
 

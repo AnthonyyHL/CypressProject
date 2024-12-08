@@ -1,3 +1,5 @@
+import BasePage from '../basePage/BasePage';
+
 class LogInPage extends BasePage {
     logInPageElements = {
         logInLabel: '#logInModalLabel',
@@ -6,15 +8,21 @@ class LogInPage extends BasePage {
     };
 
     logInLabel() {
-        return cy.get(this.logInPageElements.logInLabel);
+        return cy.get(this.logInPageElements.logInLabel, {
+            timeout: super.getTimeout(),
+        });
     }
 
     closeButton1() {
-        return cy.get(this.logInPageElements.closeButton1);
+        return cy.get(this.logInPageElements.closeButton1, {
+            timeout: super.getTimeout(),
+        });
     }
 
     closeButton2() {
-        return cy.get(this.logInPageElements.closeButton2);
+        return cy.get(this.logInPageElements.closeButton2, {
+            timeout: super.getTimeout(),
+        });
     }
 
     clickCloseButton1() {
@@ -27,7 +35,7 @@ class LogInPage extends BasePage {
 
     isLogInPageVisible(labelText) {
         super.isElementVisible(this.logInLabel());
-        this.logInLabel().contains(labelText);
+        this.logInLabel().should('contain.text', labelText);
     }
 }
 

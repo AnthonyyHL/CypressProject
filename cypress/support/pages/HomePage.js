@@ -1,25 +1,32 @@
-import HomePage from './HomePage';
+import BasePage from '../basePage/BasePage';
 
-class HomePage extends HomePage {
+class HomePage extends BasePage {
     homePageElements = {
+        carousel: '#carouselExampleIndicators',
         carouselItem: '.carousel-item',
         prevItemButton: '.carousel-control-prev-icon',
         nextItemButton: '.carousel-control-next-icon',
     };
 
+    carousel() {
+        return cy.get(this.homePageElements.carousel, {
+            timeout: super.getTimeout(),
+        });
+    }
+
     carouselItem() {
         return cy.get(this.homePageElements.carouselItem, {
-            timeout: super.wait.timeout,
+            timeout: super.getTimeout(),
         });
     }
     prevItemButton() {
         return cy.get(this.homePageElements.prevItemButton, {
-            timeout: super.wait.timeout,
+            timeout: super.getTimeout(),
         });
     }
     nextItemButton() {
         return cy.get(this.homePageElements.nextItemButton, {
-            timeout: super.wait.timeout,
+            timeout: super.getTimeout(),
         });
     }
 
@@ -31,6 +38,10 @@ class HomePage extends HomePage {
     goToNextItem() {
         this.nextItemButton().should('be.clickable');
         return this.nextItemButton().click();
+    }
+
+    isCarouselVisible() {
+        return super.isElementVisible(this.carousel());
     }
 }
 

@@ -1,3 +1,5 @@
+import BasePage from '../basePage/BasePage';
+
 class ContactsPage extends BasePage {
     contactsPageElements = {
         contactsLabel: '#exampleModalLabel',
@@ -6,15 +8,21 @@ class ContactsPage extends BasePage {
     };
 
     contactsLabel() {
-        return cy.get(this.contactsPageElements.contactsLabel);
+        return cy.get(this.contactsPageElements.contactsLabel, {
+            timeout: super.getTimeout(),
+        });
     }
 
     closeButton1() {
-        return cy.get(this.contactsPageElements.closeButton1);
+        return cy.get(this.contactsPageElements.closeButton1, {
+            timeout: super.getTimeout(),
+        });
     }
 
     closeButton2() {
-        return cy.get(this.contactsPageElements.closeButton2);
+        return cy.get(this.contactsPageElements.closeButton2, {
+            timeout: super.getTimeout(),
+        });
     }
 
     clickCloseButton1() {
@@ -27,7 +35,7 @@ class ContactsPage extends BasePage {
 
     isContactsPageVisible(labelText) {
         super.isElementVisible(this.contactsLabel());
-        this.contactsLabel().contains(labelText);
+        this.contactsLabel().should('contain.text', labelText);
     }
 }
 

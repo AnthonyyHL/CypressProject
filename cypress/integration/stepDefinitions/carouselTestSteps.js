@@ -33,3 +33,21 @@ Then('the previous image should not be visible', () => {
     homePage.isOldActiveImageNotVisible();
     cy.log('The old active image is not visible');
 });
+
+When('{string} image is visible', (alt) => {
+    homePage.isItemVisibleByALt(alt);
+    cy.log('The `${alt}` image is visible');
+});
+
+When(
+    "I click on the carousel's right arrow navigating through all items",
+    () => {
+        homePage.repeatCarouselItemsNthTimes(homePage.getItemsQuantity());
+        cy.log('All the elements have been traversed');
+    }
+);
+
+Then('it should display the {string} image again', (alt) => {
+    homePage.isItemVisibleByALt(alt);
+    cy.log('The `${alt}` image is visible again');
+});

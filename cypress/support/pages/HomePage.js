@@ -51,6 +51,10 @@ class HomePage extends BasePage {
         return super.isElementVisible(this.carousel());
     }
 
+    isItemVisibleByALt(alt) {
+        return this.isElementVisible(this.carousel().find(`img[alt="${alt}"]`));
+    }
+
     getActiveImage() {
         return this.carousel()
             .find('.active img')
@@ -78,6 +82,18 @@ class HomePage extends BasePage {
                 'active'
             );
         });
+    }
+
+    getItemsQuantity() {
+        return this.carouselItem().its('length');
+    }
+
+    repeatCarouselItemsNthTimes(times) {
+        for (let i = 0; i < 3; i++) {
+            super.isElementVisible(this.carouselItem().eq(i));
+            this.goToNextItem();
+            cy.wait(1000);
+        }
     }
 }
 

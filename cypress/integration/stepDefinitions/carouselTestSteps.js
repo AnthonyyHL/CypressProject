@@ -51,3 +51,17 @@ Then('it should display the {string} image again', (alt) => {
     homePage.isItemVisibleByALt(alt);
     cy.log('The `${alt}` image is visible again');
 });
+
+Given("I don't interact with the carousel", () => {
+    cy.log('Not interacting with carousel');
+});
+
+When('I wait for {int} seconds', (seconds) => {
+    cy.wait(seconds * 1000);
+});
+
+Then('images should change automatically', () => {
+    homePage.getActiveImage();
+    homePage.goToNextItem();
+    homePage.checkActiveImageChange();
+});

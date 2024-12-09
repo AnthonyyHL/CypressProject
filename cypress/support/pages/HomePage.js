@@ -8,12 +8,13 @@ class HomePage extends BasePage {
         nextItemButton: '.carousel-control-next-icon',
     };
 
+    // Attributtes
+
     carousel() {
         return cy.get(this.homePageElements.carousel, {
             timeout: super.getTimeout(),
         });
     }
-
     carouselItem() {
         return cy.get(this.homePageElements.carouselItem, {
             timeout: super.getTimeout(),
@@ -29,19 +30,54 @@ class HomePage extends BasePage {
             timeout: super.getTimeout(),
         });
     }
+    activeCarouselImage() {
+        return super.isElementVisible(
+            this.carousel().find('.active', { timeout: super.getTimeout })
+        );
+    }
 
+    // Methods
     goToPrevItem() {
-        this.prevItemButton().should('be.clickable');
+        this.prevItemButton().should('be.visible').and('not.be.disabled');
         return this.prevItemButton().click();
     }
 
     goToNextItem() {
-        this.nextItemButton().should('be.clickable');
+        this.nextItemButton().should('be.visible').and('not.be.disabled');
         return this.nextItemButton().click();
     }
 
     isCarouselVisible() {
         return super.isElementVisible(this.carousel());
+    }
+
+    getActiveImage() {
+        return this.carousel()
+            .find('.active img')
+            .invoke('attr', 'alt')
+            .as('oldAlt');
+    }
+
+    checkActiveImageChange() {
+        cy.wait(2000);
+        const oldAlt = this.oldActiveImage;
+        return this.carousel()
+            .find('.active img')
+            .invoke('attr', 'alt')
+            .then((newAlt) => {
+                cy.get('@oldAlt').then((oldAlt) => {
+                    expect(oldAlt).to.not.equal(newAlt);
+                });
+            });
+    }
+
+    isOldActiveImageNotVisible() {
+        return cy.get('@oldAlt').then((oldAlt) => {
+            return super.verifyElementHasClass(
+                super.isElementNotVisible(cy.get(`img[alt="${oldAlt}"]`)),
+                'active'
+            );
+        });
     }
 }
 

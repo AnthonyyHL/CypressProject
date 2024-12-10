@@ -1,32 +1,40 @@
 import BasePage from '../basePage/BasePage';
+import navBar from '../../support/pages/NavBar';
 
 class HomePage extends BasePage {
-    homePageElements = {
+    homePageCarouselElements = {
         carousel: '#carouselExampleIndicators',
         carouselItem: '.carousel-item',
         prevItemButton: '.carousel-control-prev-icon',
         nextItemButton: '.carousel-control-next-icon',
     };
 
-    // Attributtes
+    homePageProductGridElements = {
+        productGrid: '#tbodyid',
+    };
 
+    constructor() {
+        super(navBar);
+    }
+
+    /* ATTRIBUTES */
     carousel() {
-        return cy.get(this.homePageElements.carousel, {
+        return cy.get(this.homePageCarouselElements.carousel, {
             timeout: super.getTimeout(),
         });
     }
     carouselItem() {
-        return cy.get(this.homePageElements.carouselItem, {
+        return cy.get(this.homePageCarouselElements.carouselItem, {
             timeout: super.getTimeout(),
         });
     }
     prevItemButton() {
-        return cy.get(this.homePageElements.prevItemButton, {
+        return cy.get(this.homePageCarouselElements.prevItemButton, {
             timeout: super.getTimeout(),
         });
     }
     nextItemButton() {
-        return cy.get(this.homePageElements.nextItemButton, {
+        return cy.get(this.homePageCarouselElements.nextItemButton, {
             timeout: super.getTimeout(),
         });
     }
@@ -35,15 +43,23 @@ class HomePage extends BasePage {
             this.carousel().find('.active', { timeout: super.getTimeout })
         );
     }
+    productGrid() {
+        return cy.get(this.homePageProductGridElements.productGrid, {
+            timeout: super.getTimeout,
+        });
+    }
 
-    // Methods
+    /* FUNCTIONS */
+    // Functions for Carousel
     goToPrevItem() {
-        this.prevItemButton().should('be.visible').and('not.be.disabled');
+        super.isElementVisible(this.prevItemButton());
+        super.isElementClickable(this.prevItemButton());
         return this.prevItemButton().click();
     }
 
     goToNextItem() {
-        this.nextItemButton().should('be.visible').and('not.be.disabled');
+        super.isElementVisible(this.nextItemButton());
+        super.isElementClickable(this.nextItemButton());
         return this.nextItemButton().click();
     }
 
@@ -64,7 +80,6 @@ class HomePage extends BasePage {
 
     checkActiveImageChange() {
         cy.wait(2000);
-        const oldAlt = this.oldActiveImage;
         return this.carousel()
             .find('.active img')
             .invoke('attr', 'alt')
@@ -94,6 +109,64 @@ class HomePage extends BasePage {
             this.goToNextItem();
             cy.wait(1000);
         }
+    }
+
+    //Functions for products
+    clickAndSaveRandomProduct() {
+        this.productGrid()
+            .find('> div')
+            .its('length')
+            .then((length) => {
+                const randomIndex = Math.floor(Math.random() * length);
+
+                const productDetail = {};
+
+                super.isElementVisible(this.productGrid());
+                this.productGrid()
+                    .find('> div')
+                    .eq(randomIndex)
+                    .then((element) => {
+                        super.isElementVisible(cy.wrap(element));
+                        super.isElementClickable(cy.wrap(element));
+
+                        cy.wrap(element)
+                            .find('.card-title')
+                            .invoke('text')
+                            .then((title) => {
+                                productDetail.title = title;
+                            });
+
+                        cy.wrap(element)
+                            .find('#article')
+                            .invoke('text')
+                            .then((description) => {
+                                productDetail.description = description;
+                            });
+
+                        cy.wrap(element).find('.card-img-top').click();
+                    });
+
+                cy.writeFile(
+                    'cypress/fixtures/productDetails.json',
+                    productDetail
+                );
+            });
+    }
+
+    clickRandomProduct() {
+        return this.productGrid()
+            .find('> div')
+            .its('length')
+            .then((length) => {
+                const randomIndex = Math.floor(Math.random() * length);
+
+                super.isElementVisible(this.productGrid());
+                this.productGrid()
+                    .find('> div')
+                    .eq(randomIndex)
+                    .find('.card-img-top')
+                    .click();
+            });
     }
 }
 

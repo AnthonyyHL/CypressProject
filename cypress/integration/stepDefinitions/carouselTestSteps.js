@@ -2,7 +2,7 @@ import { Given, When, Then, And } from 'cypress-cucumber-preprocessor/steps';
 
 const homePage = require('../../support/pages/HomePage');
 
-beforeEach(() => {
+beforeEach({ tags: '@main-page' }, () => {
     cy.visit('https://www.demoblaze.com/');
 });
 
@@ -64,4 +64,5 @@ Then('images should change automatically', () => {
     homePage.getActiveImage();
     homePage.goToNextItem();
     homePage.checkActiveImageChange();
+    cy.log('Images have changed automatically');
 });

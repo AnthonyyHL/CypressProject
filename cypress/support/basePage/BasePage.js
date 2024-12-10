@@ -1,7 +1,10 @@
 class BasePage {
-    wait = {
-        timeout: 10000,
-    };
+    constructor(navBar) {
+        this.navBar = navBar; // Store the navBar instance
+        this.wait = {
+            timeout: 10000,
+        };
+    }
 
     getTimeout() {
         return this.wait.timeout;
@@ -23,9 +26,9 @@ class BasePage {
 
     isElementClickable(item) {
         if (typeof item === 'string' && item.startsWith('@')) {
-            return cy.get(item).should('exist').and('be.clickable');
+            return cy.get(item).should('exist').and('not.be.disabled');
         }
-        return item.should('exist').and('be.clickable');
+        return item.should('exist').and('not.be.disabled');
     }
 
     verifyElementHasClass(item, className) {
@@ -33,6 +36,10 @@ class BasePage {
             return cy.get(item).should('have.class', className);
         }
         return item.should('not.have.class', className);
+    }
+
+    navigateToNavBarOption(option) {
+        this.navBar.clickNavOption(option);
     }
 }
 

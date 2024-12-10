@@ -1,4 +1,5 @@
 import BasePage from '../basePage/BasePage';
+import navBar from '../../support/pages/NavBar';
 
 class LogInPage extends BasePage {
     logInPageElements = {
@@ -6,6 +7,10 @@ class LogInPage extends BasePage {
         closeButton1: '#logInModal > .close',
         closeButton2: '#logInModal > .btn-secondary',
     };
+
+    constructor() {
+        super(navBar);
+    }
 
     logInLabel() {
         return cy.get(this.logInPageElements.logInLabel, {

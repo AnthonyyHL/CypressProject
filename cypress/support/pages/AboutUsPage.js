@@ -1,4 +1,5 @@
 import BasePage from '../basePage/BasePage';
+import navBar from '../../support/pages/NavBar';
 
 class AboutUsPage extends BasePage {
     aboutUsElements = {
@@ -6,6 +7,10 @@ class AboutUsPage extends BasePage {
         closeButton1: '#videoModal > .close',
         closeButton2: '#videoModal > .btn-secondary',
     };
+
+    constructor() {
+        super(navBar);
+    }
 
     aboutUsLabel() {
         return cy.get(this.aboutUsElements.aboutUsLabel, {

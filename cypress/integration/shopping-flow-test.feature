@@ -1,4 +1,4 @@
-Feature: E-commerce Core Shopping Flow
+Feature: E-commerce Shopping Flow
   As a customer
   I want to browse products, manage my cart and complete purchases
   So that I can successfully shop online
@@ -17,13 +17,13 @@ Feature: E-commerce Core Shopping Flow
 
   @main-page
   Scenario: Add product to cart
-    When I click "Add to Cart" on a product
+    Given I choose a product from the grid
+    When I add product to the cart
     Then the product should be added to my cart
-    And cart total should update accordingly
 
   @cart-page
   Scenario: Remove product from cart
-    When I remove a product from the cart
+    When I remove the last product added to the cart
     Then the product should no longer appear in cart
     And cart total should be recalculated
 

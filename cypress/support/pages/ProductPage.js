@@ -1,4 +1,5 @@
 import BasePage from '../basePage/BasePage';
+import navBar from '../../support/pages/NavBar';
 
 class ProductPage extends BasePage {
     productPageElements = {
@@ -8,6 +9,10 @@ class ProductPage extends BasePage {
         description: '#more-information > p',
         addToCartButton: '#tbodyid > div.row a',
     };
+
+    constructor() {
+        super(navBar);
+    }
 
     image() {
         return cy.get(this.productPageElements.image, {
@@ -62,7 +67,6 @@ class ProductPage extends BasePage {
 
     baseInfoMatches() {
         return cy.fixture('productDetails.json').then((details) => {
-            cy.log(details.title.trim(), ' | ', details.description.trim());
             this.title()
                 .invoke('text')
                 .then((text) => {
@@ -78,9 +82,32 @@ class ProductPage extends BasePage {
     }
 
     addProductToCart() {
+        const productAddedToCartDetails = {};
+
+        const productTitle = this.title();
+        super.isElementVisible(productTitle);
+        productTitle.invoke('text').then((title) => {
+            productAddedToCartDetails.title = title;
+        });
+
+        const productPrice = this.price();
+        super.isElementVisible(productPrice);
+        productPrice.invoke('text').then((price) => {
+            const cleanedPrice = price.replace(/[\$\s*includes tax]/g, '');
+            cy.log(cleanedPrice);
+            productAddedToCartDetails.price = cleanedPrice;
+        });
+
+        cy.writeFile(
+            'cypress/fixtures/productAddedToCartDetails.json',
+            productAddedToCartDetails
+        );
+
         super.isElementVisible(this.addToCartButton());
-        super.isElementClickable(this.addProductToCart());
-        return this.addProductToCart().click();
+        super.isElementClickable(this.addToCartButton());
+        this.addToCartButton().click();
+
+        super.navigateToNavBarOption('Cart');
     }
 }
 

@@ -23,6 +23,7 @@ Feature: E-commerce Shopping Flow
 
   @cart-page
   Scenario: Remove product from cart
+    Given cart has at least 1 product
     When I remove the last product added to the cart
     Then the product should no longer appear in cart
     And cart total should be recalculated

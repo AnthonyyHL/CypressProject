@@ -8,6 +8,10 @@ beforeEach({ tags: '@main-page' }, () => {
     cy.visit('https://www.demoblaze.com/');
 });
 
+beforeEach({ tags: '@cart-page' }, () => {
+    cy.visit('https://www.demoblaze.com/cart.html');
+});
+
 When('I click on a product', () => {
     homePage.clickAndSaveRandomProduct();
     cy.log('Product has been chosen');
@@ -34,10 +38,39 @@ Given('I choose a product from the grid', () => {
 });
 
 When('I add product to the cart', () => {
-    productPage.addProductToCart();
+    productPage.addAndSaveProductToCart();
     cy.log('Product has been successfully added to cart');
 });
 
 Then('the product should be added to my cart', () => {
-    cartPage.checkLastProductAdded();
+    productPage.navigateToCartPage();
+    cartPage.checkLastProductAdded(true);
+    cy.log('Product recently added appears in cart');
+});
+
+Given('cart has at least {int} product', (minimumQuantity) => {
+    if (cartPage.isCartEmpty()) {
+        for (let i = 0; i < 2; i++) {
+            cartPage.navigateToHomePage();
+            homePage.clickRandomProduct();
+            productPage.addProductToCart();
+        }
+        productPage.navigateToCartPage();
+    }
+    cy.log('Cart is not empty');
+});
+
+When('I remove the last product added to the cart', () => {
+    cartPage.removeProductRecentlyAdded();
+    cy.log('Product was removed');
+});
+
+Then('the product should no longer appear in cart', () => {
+    cartPage.checkLastProductAdded(false);
+    cy.log('Product recently added, no longer appear in cart');
+});
+
+Then('cart total should be recalculated', () => {
+    cartPage.checkTotalPriceUpdated();
+    cy.log("Cart's total price has changed");
 });

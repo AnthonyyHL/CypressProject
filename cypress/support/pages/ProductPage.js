@@ -65,6 +65,10 @@ class ProductPage extends BasePage {
         };
     }
 
+    navigateToCartPage() {
+        super.navigateToNavBarOption('Cart');
+    }
+
     baseInfoMatches() {
         return cy.fixture('productDetails.json').then((details) => {
             this.title()
@@ -81,7 +85,7 @@ class ProductPage extends BasePage {
         });
     }
 
-    addProductToCart() {
+    addAndSaveProductToCart() {
         const productAddedToCartDetails = {};
 
         const productTitle = this.title();
@@ -106,8 +110,12 @@ class ProductPage extends BasePage {
         super.isElementVisible(this.addToCartButton());
         super.isElementClickable(this.addToCartButton());
         this.addToCartButton().click();
+    }
 
-        super.navigateToNavBarOption('Cart');
+    addProductToCart() {
+        super.isElementVisible(this.addToCartButton());
+        super.isElementClickable(this.addToCartButton());
+        this.addToCartButton().click();
     }
 }
 

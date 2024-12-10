@@ -5,12 +5,27 @@ class CartPage extends BasePage {
     cartPageElements = {
         product: '#tbodyid > .success',
         totalPrice: '#totalp',
+        placeOrderButton: '#page-wrapper .btn-success',
+    };
+
+    cartPagePopUpElements = {
+        nameInput: '#name',
+        countryInput: '#country',
+        cityInput: '#city',
+        cardInput: '#card',
+        monthInput: '#month',
+        yearInput: '#year',
+        purchaseButton: '#orderModal .modal-footer > .btn-primary',
+        successfulPurchaseLabel:
+            'body > div.sweet-alert.showSweetAlert.visible > h2',
     };
 
     constructor() {
         super(navBar);
     }
 
+    /* ATTRIBUTES */
+    // Attributes for Cart Page
     productList() {
         return cy.get(this.cartPageElements.product, {
             timeout: super.getTimeout(),
@@ -21,7 +36,55 @@ class CartPage extends BasePage {
             timeout: super.getTimeout(),
         });
     }
+    placeOrderButton() {
+        return cy.get(this.cartPageElements.placeOrderButton, {
+            timeout: super.getTimeout(),
+        });
+    }
+    // Attributes for Cart Page
+    nameInput() {
+        return cy.get(this.cartPagePopUpElements.nameInput, {
+            timeout: super.getTimeout(),
+        });
+    }
+    countryInput() {
+        return cy.get(this.cartPagePopUpElements.countryInput, {
+            timeout: super.getTimeout(),
+        });
+    }
+    cityInput() {
+        return cy.get(this.cartPagePopUpElements.cityInput, {
+            timeout: super.getTimeout(),
+        });
+    }
+    cardInput() {
+        return cy.get(this.cartPagePopUpElements.cardInput, {
+            timeout: super.getTimeout(),
+        });
+    }
+    monthInput() {
+        return cy.get(this.cartPagePopUpElements.monthInput, {
+            timeout: super.getTimeout(),
+        });
+    }
+    yearInput() {
+        return cy.get(this.cartPagePopUpElements.yearInput, {
+            timeout: super.getTimeout(),
+        });
+    }
+    purchaseButton() {
+        return cy.get(this.cartPagePopUpElements.purchaseButton, {
+            timeout: super.getTimeout(),
+        });
+    }
+    successfulPurchaseLabel() {
+        return cy.get(this.cartPagePopUpElements.successfulPurchaseLabel, {
+            timeout: super.getTimeout(),
+        });
+    }
 
+    /* FUNCTIONS */
+    // Functions for Cart Page
     isCartEmpty() {
         return cy.get('body').then(($body) => {
             if ($body.find(this.cartPageElements.product).length === 0) {
@@ -33,6 +96,12 @@ class CartPage extends BasePage {
 
     navigateToHomePage() {
         super.navigateToNavBarOption('Home');
+    }
+
+    placeOrder() {
+        super.isElementVisible(this.placeOrderButton());
+        super.isElementClickable(this.placeOrderButton());
+        return this.placeOrderButton().click();
     }
 
     checkLastProductAdded(isEqual) {
@@ -103,6 +172,64 @@ class CartPage extends BasePage {
                 expect(totalPriceText).to.not.equal(currentTotalPriceText);
             });
         });
+    }
+
+    // Functions for Cart Pop Up
+    setName(name) {
+        const nameInput = this.nameInput();
+        super.isElementClickable(nameInput);
+
+        return nameInput.type(name);
+    }
+
+    setCountry(country) {
+        const countryInput = this.countryInput();
+        super.isElementClickable(countryInput);
+
+        return countryInput.type(country);
+    }
+    setCity(city) {
+        const cityInput = this.cityInput();
+        super.isElementClickable(cityInput);
+
+        return cityInput.type(city);
+    }
+    setCard(card) {
+        const cardInput = this.cardInput();
+        super.isElementClickable(cardInput);
+
+        return cardInput.type(card);
+    }
+    setMonth(month) {
+        const monthInput = this.monthInput();
+        super.isElementClickable(monthInput);
+
+        return monthInput.type(month);
+    }
+    setYear(year) {
+        const yearInput = this.yearInput();
+        super.isElementClickable(yearInput);
+
+        return yearInput.type(year);
+    }
+
+    setUserData() {
+        return cy.fixture('userData.json').then((userData) => {
+            this.setName(userData.name);
+            this.setCountry(userData.country);
+            this.setCity(userData.city);
+            this.setCard(userData.card);
+            this.setMonth(userData.month);
+            this.setYear(userData.year);
+
+            this.isElementVisible(this.purchaseButton()),
+                this.isElementClickable(this.purchaseButton());
+            this.purchaseButton().click();
+        });
+    }
+
+    isPurchaseSuccessful(labelText) {
+        return this.successfulPurchaseLabel().should('has.text', labelText);
     }
 }
 

@@ -48,15 +48,11 @@ Then('the product should be added to my cart', () => {
     cy.log('Product recently added appears in cart');
 });
 
-Given('cart has at least {int} product', (minimumQuantity) => {
-    if (cartPage.isCartEmpty()) {
-        for (let i = 0; i < 2; i++) {
-            cartPage.navigateToHomePage();
-            homePage.clickRandomProduct();
-            productPage.addProductToCart();
-        }
-        productPage.navigateToCartPage();
-    }
+Given('I have items in my cart', () => {
+    cartPage.navigateToHomePage();
+    homePage.clickRandomProduct();
+    productPage.addProductToCart();
+    productPage.navigateToCartPage();
     cy.log('Cart is not empty');
 });
 
@@ -74,3 +70,33 @@ Then('cart total should be recalculated', () => {
     cartPage.checkTotalPriceUpdated();
     cy.log("Cart's total price has changed");
 });
+
+Given('cart has at least {int} product', (minimumQuantity) => {
+    if (cartPage.isCartEmpty()) {
+        for (let i = 0; i < minimumQuantity; i++) {
+            cartPage.navigateToHomePage();
+            homePage.clickRandomProduct();
+            productPage.addProductToCart();
+        }
+        productPage.navigateToCartPage();
+    }
+    cy.log('Cart is not empty');
+});
+
+When('I proceed to checkout', () => {
+    cartPage.placeOrder();
+    cy.log('Order has been placed');
+});
+
+When('I fill in required payment details', () => {
+    cartPage.setUserData();
+    cy.log('Data details has setted up');
+});
+
+Then(
+    'I should see {string} as a successful purchase message',
+    (purchaseSuccessText) => {
+        cartPage.isPurchaseSuccessful(purchaseSuccessText);
+        cy.log('The purchase order has been placed successfully');
+    }
+);

@@ -23,14 +23,14 @@ Feature: E-commerce Shopping Flow
 
   @cart-page
   Scenario: Remove product from cart
-    Given cart has at least 1 product
+    Given I have items in my cart
     When I remove the last product added to the cart
     Then the product should no longer appear in cart
     And cart total should be recalculated
 
   @cart-page
   Scenario: Complete purchase
-    Given I have items in my cart
+    Given cart has at least 3 product
     When I proceed to checkout
     And I fill in required payment details
-    Then I should receive order confirmation
+    Then I should see "Thank you for your purchase!" as a successful purchase message

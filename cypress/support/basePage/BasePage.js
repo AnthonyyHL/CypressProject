@@ -1,6 +1,6 @@
 class BasePage {
     constructor(navBar) {
-        this.navBar = navBar; // Store the navBar instance
+        this.navBar = navBar;
         this.wait = {
             timeout: 10000,
         };

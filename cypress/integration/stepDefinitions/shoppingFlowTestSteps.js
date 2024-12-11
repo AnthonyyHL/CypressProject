@@ -8,10 +8,6 @@ beforeEach({ tags: '@main-page' }, () => {
     cy.visit('https://www.demoblaze.com/');
 });
 
-beforeEach({ tags: '@cart-page' }, () => {
-    cy.visit('https://www.demoblaze.com/cart.html');
-});
-
 When('I click on a product', () => {
     homePage.clickAndSaveRandomProduct();
     cy.log('Product has been chosen');

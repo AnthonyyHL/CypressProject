@@ -8,6 +8,11 @@ class LogInPage extends BasePage {
         closeButton2: '#logInModal > .btn-secondary',
     };
 
+    logInPageFormElements = {
+        usernameInput: '#loginusername',
+        passwordInput: '#loginpassword',
+    };
+
     constructor() {
         super(navBar);
     }
@@ -17,15 +22,24 @@ class LogInPage extends BasePage {
             timeout: super.getTimeout(),
         });
     }
-
     closeButton1() {
         return cy.get(this.logInPageElements.closeButton1, {
             timeout: super.getTimeout(),
         });
     }
-
     closeButton2() {
         return cy.get(this.logInPageElements.closeButton2, {
+            timeout: super.getTimeout(),
+        });
+    }
+
+    usernameInput() {
+        return cy.get(this.logInPageFormElements.usernameInput, {
+            timeout: super.getTimeout(),
+        });
+    }
+    passwordInput() {
+        return cy.get(this.logInPageFormElements.passwordInput, {
             timeout: super.getTimeout(),
         });
     }
@@ -40,7 +54,21 @@ class LogInPage extends BasePage {
 
     isLogInPageVisible(labelText) {
         super.isElementVisible(this.logInLabel());
-        this.logInLabel().should('contain.text', labelText);
+        this.logInLabel()
+            .invoke('text')
+            .then((text) => {
+                expect(text.trim()).to.equal(labelText.trim());
+            });
+    }
+
+    isLoginFormVisible() {
+        return () => {
+            super.isElementVisible(this.usernameInput());
+            super.isElementClickable(this.usernameInput());
+
+            super.isElementVisible(this.passwordInput());
+            super.isElementClickable(this.passwordInput());
+        };
     }
 }
 

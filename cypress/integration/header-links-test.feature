@@ -6,7 +6,7 @@ Feature: Header Navigation Functionality
   Background:
     Given the header navigation menu is visible
 
-  @main-page
+  @main-page @smoke
   Scenario: Different link behaviors validation
     When I click on "Home"
     Then I should be able to see the carousel
@@ -14,15 +14,15 @@ Feature: Header Navigation Functionality
     Then a "Log in" modal should appear
     And the modal should contain login form fields
 
-  @cart-page
+  @cart-page @smoke
   Scenario: Navigation state preservation
     Given I am on the "Cart" page
     And I have items in my cart
     When I navigate to "Home" section
     Then I return to the "Cart" page
     And my cart should remain with items
-
-  @main-page
+ 
+  @main-page @smoke
   Scenario: Header interaction states
     When I hover over "Home" link
     Then the link should display a visual hover state

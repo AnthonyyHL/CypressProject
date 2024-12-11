@@ -5,7 +5,7 @@ const homePage = require('../../support/pages/HomePage');
 const cartPage = require('../../support/pages/CartPage');
 const loginPage = require('../../support/pages/LogInPage');
 
-beforeEach({ tags: '@main-page' }, () => {
+beforeEach({ tags: '@cart-page' }, () => {
     cy.visit('/cart.html');
 });
 

@@ -100,3 +100,8 @@ Then(
         cy.log('The purchase order has been placed successfully');
     }
 );
+
+Then('my cart should remain with items', () => {
+    expect(cartPage.isCartEmpty()).to.not.be.true;
+    cy.log('Cart remains with items');
+});

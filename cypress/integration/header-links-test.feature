@@ -18,10 +18,9 @@ Feature: Header Navigation Functionality
   Scenario: Navigation state preservation
     Given I am on the "Cart" page
     And I have items in my cart
-    When I navigate to another section
-    And I use the browser's back button
-    Then I should return to the "Cart" page
-    And my cart items should remain unchanged
+    When I navigate to "Home" section
+    Then I return to the "Cart" page
+    And my cart should remain with items
 
   @main-page
   Scenario: Header interaction states

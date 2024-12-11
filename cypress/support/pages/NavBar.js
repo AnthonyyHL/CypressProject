@@ -5,7 +5,7 @@ class NavBar extends BasePage {
         home: "#navbarExample > .navbar-nav li:contains('Home')",
         contact: "#navbarExample > .navbar-nav li:contains('Contact')",
         aboutus: "#navbarExample > .navbar-nav li:contains('About Us')",
-        cart: '#cartur',
+        cart: "#navbarExample > .navbar-nav li:contains('Cart')",
         login: '#login2',
         signup: '#signin2',
     };
@@ -42,7 +42,6 @@ class NavBar extends BasePage {
     }
 
     clickNavOption(optionName) {
-        cy.log(this.navBarOption[optionName.toLowerCase()]);
         const option = cy.get(this.navBarOption[optionName.toLowerCase()]);
         super.isElementVisible(option);
         super.isElementClickable(option);

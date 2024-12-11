@@ -40,7 +40,7 @@ This testing framework is designed to automate the testing of functionalities on
 
 1. **Clone the repository:**
     ```bash
-    git clone https://github.com/AnthonyyHL/DemoblazeCypressFramework.git
+    git clone https://github.com/AnthonyyHL/CypressProject.git
     ```
 2. **Install dependencies:** Make sure you have Node.js installed. Run the following command to install all required dependencies:
    `npm install`

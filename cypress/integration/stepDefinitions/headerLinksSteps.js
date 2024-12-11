@@ -6,7 +6,7 @@ const cartPage = require('../../support/pages/CartPage');
 const loginPage = require('../../support/pages/LogInPage');
 
 beforeEach({ tags: '@main-page' }, () => {
-    cy.visit('https://www.demoblaze.com/cart.html');
+    cy.visit('/cart.html');
 });
 
 Given('the header navigation menu is visible', () => {

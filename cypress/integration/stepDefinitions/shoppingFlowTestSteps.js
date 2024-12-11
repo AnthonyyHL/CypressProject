@@ -5,7 +5,7 @@ const productPage = require('../../support/pages/ProductPage');
 const cartPage = require('../../support/pages/CartPage');
 
 beforeEach({ tags: '@main-page' }, () => {
-    cy.visit('https://www.demoblaze.com/');
+    cy.visit('/');
 });
 
 When('I click on a product', () => {

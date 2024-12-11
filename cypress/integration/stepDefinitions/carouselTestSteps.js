@@ -3,7 +3,7 @@ import { Given, When, Then, And } from 'cypress-cucumber-preprocessor/steps';
 const homePage = require('../../support/pages/HomePage');
 
 beforeEach({ tags: '@main-page' }, () => {
-    cy.visit('https://www.demoblaze.com/');
+    cy.visit('/');
 });
 
 Given('the carousel is visible', () => {

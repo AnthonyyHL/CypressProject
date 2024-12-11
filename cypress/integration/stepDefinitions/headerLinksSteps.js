@@ -63,3 +63,23 @@ Then('I return to the {string} page', (option) => {
     navBar.clickNavOption(option);
     cy.log(`The current page is now ${option}`);
 });
+
+Then('my cart should remain with items', () => {
+    expect(cartPage.isCartEmpty()).to.not.be.true;
+    cy.log('Cart remains with items');
+});
+
+When('I hover over {string} link', (option) => {
+    navBar.hoverItem(option);
+    cy.log(`${option} header link is hovered`);
+});
+
+Then('the link should display a visual hover state', () => {
+    navBar.itemHasHoverState();
+    cy.log('Header link has a hover state');
+});
+
+Then("the cursor should change to indicate it's clickable", () => {
+    navBar.isCursorClickableAtItem();
+    cy.log('Curso changes to a clickable state when hovers header link');
+});

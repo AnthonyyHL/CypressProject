@@ -24,6 +24,6 @@ Feature: Header Navigation Functionality
 
   @main-page
   Scenario: Header interaction states
-    When I hover over a navigation link
+    When I hover over "Home" link
     Then the link should display a visual hover state
     And the cursor should change to indicate it's clickable

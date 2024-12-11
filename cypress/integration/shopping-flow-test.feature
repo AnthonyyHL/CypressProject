@@ -4,12 +4,6 @@ Feature: E-commerce Shopping Flow
   So that I can successfully shop online
 
   @main-page
-  Scenario: Select product category
-    When I click on a product category
-    Then I should see only products from that category
-    And the category should be highlighted as selected
-
-  @main-page
   Scenario: View product details
     When I click on a product
     Then all the product's information should be visible

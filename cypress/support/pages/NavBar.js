@@ -69,6 +69,31 @@ class NavBar extends BasePage {
             super.isElementClickable(this.signUp());
         };
     }
+
+    hoverItem(optionName) {
+        const option = cy
+            .get(this.navBarOption[optionName.toLowerCase()])
+            .as('headerLink');
+        return option.trigger('mouseover');
+    }
+
+    itemHasHoverState() {
+        return cy.get('@headerLink').then((headerLink) => {
+            cy.wrap(headerLink)
+                .should('have.css', 'color')
+                .and('not.equal', 'rgb(0, 0, 0)');
+        });
+    }
+
+    isCursorClickableAtItem() {
+        return cy.get('@headerLink').then((headerLink) => {
+            cy.wrap(headerLink)
+                .invoke('css', 'cursor')
+                .then((cursor) => {
+                    expect(cursor).to.be.oneOf(['pointer', 'auto']);
+                });
+        });
+    }
 }
 
 module.exports = new NavBar();

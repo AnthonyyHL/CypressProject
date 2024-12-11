@@ -4,17 +4,71 @@ class NavBar extends BasePage {
     navBarOption = {
         home: "#navbarExample > .navbar-nav li:contains('Home')",
         contact: "#navbarExample > .navbar-nav li:contains('Contact')",
-        aboutUs: "#navbarExample > .navbar-nav li:contains('About Us')",
-        cart: "#navbarExample > .navbar-nav li:contains('Cart')",
-        logIn: "#navbarExample > .navbar-nav li:contains('Log In')",
-        signUp: "#navbarExample > .navbar-nav li:contains('Sign Up')",
+        aboutus: "#navbarExample > .navbar-nav li:contains('About Us')",
+        cart: '#cartur',
+        login: '#login2',
+        signup: '#signin2',
     };
 
+    home() {
+        cy.get(this.navBarOption.home, {
+            timeout: super.getTimeout(),
+        });
+    }
+    contact() {
+        cy.get(this.navBarOption.contact, {
+            timeout: super.getTimeout(),
+        });
+    }
+    aboutUs() {
+        cy.get(this.navBarOption.aboutus, {
+            timeout: super.getTimeout(),
+        });
+    }
+    cart() {
+        cy.get(this.navBarOption.cart, {
+            timeout: super.getTimeout(),
+        });
+    }
+    logIn() {
+        cy.get(this.navBarOption.login, {
+            timeout: super.getTimeout(),
+        });
+    }
+    signUp() {
+        cy.get(this.navBarOption.signup, {
+            timeout: super.getTimeout(),
+        });
+    }
+
     clickNavOption(optionName) {
+        cy.log(this.navBarOption[optionName.toLowerCase()]);
         const option = cy.get(this.navBarOption[optionName.toLowerCase()]);
         super.isElementVisible(option);
         super.isElementClickable(option);
         return option.click();
+    }
+
+    isNavBarVisible() {
+        return () => {
+            super.isElementVisible(this.home());
+            super.isElementClickable(this.home());
+
+            super.isElementVisible(this.contact());
+            super.isElementClickable(this.contact());
+
+            super.isElementVisible(this.aboutUs());
+            super.isElementClickable(this.aboutUs());
+
+            super.isElementVisible(this.cart());
+            super.isElementClickable(this.cart());
+
+            super.isElementVisible(this.logIn());
+            super.isElementClickable(this.logIn());
+
+            super.isElementVisible(this.signUp());
+            super.isElementClickable(this.signUp());
+        };
     }
 }
 

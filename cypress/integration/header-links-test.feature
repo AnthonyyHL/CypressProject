@@ -10,8 +10,8 @@ Feature: Header Navigation Functionality
   Scenario: Different link behaviors validation
     When I click on "Home"
     Then I should be able to see the carousel
-    When I click on "Log In"
-    Then a login modal should appear
+    When I click on "LogIn"
+    Then a "Log in" modal should appear
     And the modal should contain login form fields
 
   @cart-page
